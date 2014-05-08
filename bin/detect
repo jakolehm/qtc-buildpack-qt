@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 # bin/detect <build-dir>
 
-echo $1/Makefile
-if [[ -f $1/Makefile ]]; then
+if [ $(ls $1/*.pro 2>/dev/null) ]; then
   echo "Qt" && exit 0
 else
   echo "no" && exit 1
