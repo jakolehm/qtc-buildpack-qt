@@ -15,6 +15,15 @@ function indent() {
   esac
 }
 
+echo "-----> Downloading and installing Qt 5.3.0"
+qt_url="https://s3-eu-west-1.amazonaws.com/qtc-runtime-buildpacks/binaries/qt-5.3.0-linux-x64.tar.gz"
+# Move Qt to ./vendor and make them executable
+mkdir -p $build_dir/vendor/qt
+curl $qt_url -s -o - | tar xzf - -C $build_dir/vendor/qt
+chmod +x $build_dir/vendor/qt/bin/*
+PATH=$build_dir/vendor/qt/bin:$PATH
+
+
 cd $BUILD_DIR
 echo "-----> Configuring with qmake"
 qmake 2>&1 | indent
