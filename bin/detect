@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # bin/detect <build-dir>
 
+echo $1/Makefile
 if [[ -f $1/Makefile ]]; then
   echo "Qt" && exit 0
 else
