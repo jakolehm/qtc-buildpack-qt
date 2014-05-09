@@ -6,6 +6,7 @@ set -o pipefail
 
 BUILD_DIR=$1
 CACHE_DIR=$2
+QT_DIR="/opt/Qt5.3.0"
 
 function indent() {
   c='s/^/       /'
@@ -17,11 +18,11 @@ function indent() {
 
 echo "-----> Downloading and installing Qt 5.3.0"
 qt_url="https://s3-eu-west-1.amazonaws.com/qtc-runtime-buildpacks/binaries/qt-5.3.0-linux-x64.tar.gz"
-# Move Qt to ./vendor and make them executable
-mkdir -p $BUILD_DIR/vendor/qt
-curl $qt_url -s -o - | tar xzf - -C $BUILD_DIR/vendor/qt
-chmod +x $BUILD_DIR/vendor/qt/bin/*
-PATH=$BUILD_DIR/vendor/qt/bin:$PATH
+# Move Qt to correct path and make binaries executable
+mkdir -p $QT_DIR
+curl $qt_url -s -o - | tar xzf - -C $QT_DIR
+chmod +x $QT_DIR/5.3/gcc_64/bin/*
+PATH=$QT_DIR/5.3/gcc_64/bin:$PATH
 
 
 cd $BUILD_DIR
