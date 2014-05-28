@@ -25,9 +25,3 @@ qmake 2>&1 | indent
 # make
 echo "-----> Compiling with make"
 make 2>&1 | indent
-
-# install
-echo "-----> Installing with make install"
-make install 2>&1 | indent
-
-ldconfig
