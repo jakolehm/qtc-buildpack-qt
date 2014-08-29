@@ -19,16 +19,25 @@ QT_VERSION="5.3.1"
 QT_MAJOR_VERSION=`echo $QT_VERSION | cut -d \. -f 1,2`
 QT_BUILD_DIR="$BUILD_DIR/.qtcs/Qt"
 QT_URL="https://s3-eu-west-1.amazonaws.com/qtc-runtime-buildpacks/binaries/lucid/qt-$QT_VERSION-linux-x64.tar.gz"
-echo "Installing Qt $QT_VERSION"
-# Move Qt to correct path and make binaries executable
+
 mkdir -p $QT_BUILD_DIR
-ln -s "$BUILD_DIR/.qtcs" "/app/.qtcs"
-curl $QT_URL -s -o - | tar xzf - -C $QT_BUILD_DIR
-chmod +x "$QT_BUILD_DIR/$QT_MAJOR_VERSION/gcc_64/bin"
+mkdir -p "$CACHE_DIR/.qtcs"
+
+if [ -f "$CACHE_DIR/.qtcs/Qt/$QT_MAJOR_VERSION/gcc_64/lib/libQt5Core.so.$QT_VERSION" ]; then
+  echo "Using cached Qt $QT_VERSION"
+  cp -ar "$CACHE_DIR/.qtcs/Qt/" "$QT_BUILD_DIR/"
+else
+  echo "Installing Qt $QT_VERSION"
+  curl $QT_URL -s -o - | tar xzf - -C $QT_BUILD_DIR
+  chmod +x "$QT_BUILD_DIR/$QT_MAJOR_VERSION/gcc_64/bin"
+
+  # Copy Qt runtime to cache
+  cp -ar "$QT_BUILD_DIR" "$CACHE_DIR/.qtcs/"
+fi
 
 echo "-----> Setting up Qt $QT_VERSION"
+ln -s "$BUILD_DIR/.qtcs" "/app/.qtcs"
 PATH="/app/.qtcs/Qt/$QT_MAJOR_VERSION/gcc_64/bin:$PATH"
-
 
 cd $BUILD_DIR
 echo "-----> Configuring with qmake"
