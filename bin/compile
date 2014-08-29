@@ -15,8 +15,21 @@ function indent() {
   esac
 }
 
-echo "-----> Setting up Qt 5.3.0"
-PATH=/opt/Qt5.3.0/5.3/gcc_64/bin:$PATH
+QT_VERSION="5.3.1"
+QT_MAJOR_VERSION = `echo $QT_VERSION | cut -d \. -f 1,2`
+QT_BUILD_DIR="$BUILD_DIR/.qtcs/Qt"
+QT_URL="https://s3-eu-west-1.amazonaws.com/qtc-runtime-buildpacks/binaries/lucid/qt-$QT_VERSION-linux-x64.tar.gz"
+echo "Installing Qt $QT_VERSION"
+# Move Qt to correct path and make binaries executable
+mkdir -p $QT_BUILD_DIR
+mkdir -p $QT_APP_DIR
+ln -s "$BUILD_DIR/.qtcs" "/app/.qtcs"
+curl $QT_URL -s -o - | tar xzf - -C $QT_BUILD_DIR
+chmod +x "$QT_BUILD_DIR/$QT_MAJOR_VERSION/gcc_64/bin"
+
+echo "-----> Setting up Qt $QT_VERSION"
+PATH="/app/.qtcs/Qt/$QT_MAJOR_VERSION/gcc_64/bin:$PATH"
+
 
 cd $BUILD_DIR
 echo "-----> Configuring with qmake"
