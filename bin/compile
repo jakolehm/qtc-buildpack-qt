@@ -29,6 +29,7 @@ mkdir -p "$CACHE_DIR/.qtcs"
 
 if [ -f "$CACHE_DIR/.qtcs/Qt/$QT_MAJOR_VERSION/gcc_64/lib/libQt5Core.so.$QT_VERSION" ]; then
   echo "Using cached copy of Qt $QT_VERSION"
+  rm -rf $QT_BUILD_DIR
   ln -s "$CACHE_DIR/.qtcs/Qt" "$BUILD_DIR/.qtcs/Qt"
 else
   if curl --output /dev/null --silent --head --fail "$QT_URL"; then
