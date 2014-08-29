@@ -24,8 +24,8 @@ mkdir -p $QT_BUILD_DIR
 mkdir -p "$CACHE_DIR/.qtcs"
 
 if [ -f "$CACHE_DIR/.qtcs/Qt/$QT_MAJOR_VERSION/gcc_64/lib/libQt5Core.so.$QT_VERSION" ]; then
-  echo "Using cached Qt $QT_VERSION"
-  cp -ar "$CACHE_DIR/.qtcs/Qt/" "$QT_BUILD_DIR/"
+  echo "Using cached copy of Qt $QT_VERSION"
+  cp -ar "$CACHE_DIR/.qtcs/Qt" "$BUILD_DIR/.qtcs/"
 else
   echo "Installing Qt $QT_VERSION"
   curl $QT_URL -s -o - | tar xzf - -C $QT_BUILD_DIR
