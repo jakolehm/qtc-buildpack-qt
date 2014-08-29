@@ -20,7 +20,7 @@ PATH=/opt/Qt5.3.0/5.3/gcc_64/bin:$PATH
 
 cd $BUILD_DIR
 echo "-----> Configuring with qmake"
-qmake 2>&1 | indent
+qmake $QMAKE_ARGS 2>&1 | indent
 
 # make
 echo "-----> Compiling with make"
