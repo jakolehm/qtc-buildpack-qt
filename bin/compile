@@ -53,7 +53,11 @@ ln -s "$BUILD_DIR/.qtcs" "/app/.qtcs"
 PATH="/app/.qtcs/Qt/$QT_MAJOR_VERSION/gcc_64/bin:$PATH"
 
 cd $BUILD_DIR
-echo "-----> Configuring with qmake"
+if [ ! -z "$QMAKE_ARGS" ];
+  echo "-----> Configuring with qmake $QMAKE_ARGS"
+else
+  echo "-----> Configuring with qmake"
+fi
 qmake $QMAKE_ARGS 2>&1 | indent
 
 # make
