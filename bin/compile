@@ -22,7 +22,6 @@ QT_URL="https://s3-eu-west-1.amazonaws.com/qtc-runtime-buildpacks/binaries/lucid
 echo "Installing Qt $QT_VERSION"
 # Move Qt to correct path and make binaries executable
 mkdir -p $QT_BUILD_DIR
-mkdir -p $QT_APP_DIR
 ln -s "$BUILD_DIR/.qtcs" "/app/.qtcs"
 curl $QT_URL -s -o - | tar xzf - -C $QT_BUILD_DIR
 chmod +x "$QT_BUILD_DIR/$QT_MAJOR_VERSION/gcc_64/bin"
